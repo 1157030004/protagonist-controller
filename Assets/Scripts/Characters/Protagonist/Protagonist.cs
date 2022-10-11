@@ -7,6 +7,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     {
         public Rigidbody Rigidbody { get; private set; }
         public ProtagonistInput Input { get; private set; }
+        public Transform MainCameraTransform { get; private set; }
 
         private ProtagonistMovementStateMachine _movementStateMachine;
 
@@ -14,6 +15,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             Rigidbody = GetComponent<Rigidbody>();
             Input = GetComponent<ProtagonistInput>();
+            MainCameraTransform = Camera.main.transform;
             _movementStateMachine = new ProtagonistMovementStateMachine(this);    
         }
 
