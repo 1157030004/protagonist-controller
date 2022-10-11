@@ -37,9 +37,9 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\StlExporter\Code\pb_Stl.cs" />
-     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\StlExporter\Code\pb_Stl_Importer.cs" />
-     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\StlExporter\Code\pb_Stl_Exporter.cs" />
      <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\StlExporter\AssemblyInfo.cs" />
+     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\StlExporter\Code\pb_Stl_Exporter.cs" />
+     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\StlExporter\Code\pb_Stl_Importer.cs" />
      <None Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\StlExporter\Unity.ProBuilder.Stl.asmdef" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

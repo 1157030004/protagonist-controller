@@ -363,6 +363,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/InputActions/Characters/Protagonist/GameInput.cs"
+"Assets/Scripts/Camera/CameraZoom.cs"
 "Assets/Scripts/Characters/Protagonist/Protagonist.cs"
 "Assets/Scripts/Characters/Protagonist/StateMachine/Movement/ProtagonistMovementStateMachine.cs"
 "Assets/Scripts/Characters/Protagonist/StateMachine/Movement/States/Grounded/Moving/ProtagonistRunningState.cs"

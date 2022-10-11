@@ -301,12 +301,12 @@
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Plugins\DualShock\DualShockSupport.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Utilities\DelegateHelpers.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Controls\DiscreteButtonControl.cs" />
-     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Controls\TouchPhaseControl.cs" />
-     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Utilities\TypeTable.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Plugins\Steam\SteamController.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Editor\Internal\EditorHelpers.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Controls\Processors\NormalizeVector3Processor.cs" />
+     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Controls\TouchPhaseControl.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Controls\AxisControl.cs" />
+     <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Utilities\TypeTable.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Controls\Processors\ScaleVector2Processor.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Editor\ControlPicker\IInputControlPickerLayout.cs" />
      <Compile Include="Library\PackageCache\com.unity.inputsystem@1.4.3\InputSystem\Editor\Internal\AdvancedDropdown\MultiLevelDataSource.cs" />

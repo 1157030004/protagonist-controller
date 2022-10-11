@@ -114,8 +114,8 @@
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\Views\Adapters\ListAdapters\ToggleableChangeListAdapter.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\Common\StringArrayContainer.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\UserInterface\CollaborateWindow.cs" />
-     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\Presenters\HistoryPresenter.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\EditorGameService\CloudCollabServiceIdentifier.cs" />
+     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\Presenters\HistoryPresenter.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\Models\Providers\Collab.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\Components\TabPageComponent.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\Collaborate\EditorGameService\CloudCollabTopMenu.cs" />

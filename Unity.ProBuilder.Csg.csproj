@@ -36,15 +36,15 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Vertex.cs" />
      <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Model.cs" />
-     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\CSG.cs" />
      <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Polygon.cs" />
-     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Plane.cs" />
+     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Node.cs" />
+     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\CSG.cs" />
+     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\VertexUtility.cs" />
      <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\VertexAttributes.cs" />
      <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\AssemblyInfo.cs" />
-     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Node.cs" />
-     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\VertexUtility.cs" />
+     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Vertex.cs" />
+     <Compile Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Classes\Plane.cs" />
      <None Include="Library\PackageCache\com.unity.probuilder@5.0.6\External\CSG\Unity.ProBuilder.Csg.asmdef" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

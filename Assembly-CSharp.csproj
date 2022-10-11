@@ -37,16 +37,17 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\StateMachine\IState.cs" />
-     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
+     <Compile Include="Assets\InputActions\Characters\Protagonist\GameInput.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistWalkingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\ProtagonistMovementStateMachine.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\ProtagonistMovementState.cs" />
-     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\ProtagonistIdlingState.cs" />
-     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistWalkingState.cs" />
-     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistRunningState.cs" />
-     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistSprintingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Protagonist.cs" />
-     <Compile Include="Assets\InputActions\Characters\Protagonist\GameInput.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistSprintingState.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistRunningState.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\ProtagonistIdlingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Utilities\Input\ProtagonistInput.cs" />
+     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraZoom.cs" />
      <None Include="Assets\Materials\Prototypes\License.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -718,13 +719,21 @@
       <Project>{9db338b3-d48c-55a3-6e2f-260f78530f1b}</Project>
       <Name>Unity.VisualScripting.SettingsProvider.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.ProBuilder.AddOns.Editor.csproj">
+      <Project>{617c0432-b482-728e-49ba-750ef79a69e7}</Project>
+      <Name>Unity.ProBuilder.AddOns.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.ProBuilder.csproj">
+      <Project>{0bed7eb4-366b-c75c-5521-d5f490030553}</Project>
+      <Name>Unity.ProBuilder</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj">
       <Project>{1cf082fc-05f4-c538-9ca0-bd302947e973}</Project>
       <Name>Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.csproj">
-      <Project>{f324f608-981d-c944-eadd-a4237a96e04f}</Project>
-      <Name>Unity.VisualScripting.Flow</Name>
+    <ProjectReference Include="Unity.ProBuilder.Editor.csproj">
+      <Project>{c83bceec-dc2d-37e5-ca51-7e86a8f7bc19}</Project>
+      <Name>Unity.ProBuilder.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{297efff5-e0d5-7e23-66c6-293e4c705288}</Project>
@@ -741,6 +750,10 @@
     <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
       <Project>{ba0b83e4-1cde-807c-c33a-9bba145c188a}</Project>
       <Name>Unity.PlasticSCM.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Flow.csproj">
+      <Project>{f324f608-981d-c944-eadd-a4237a96e04f}</Project>
+      <Name>Unity.VisualScripting.Flow</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{deada5b4-dc3f-29c7-9cab-8724b20b083a}</Project>
@@ -770,6 +783,10 @@
       <Project>{a3371213-703a-b58f-b6b8-c4128787a4dc}</Project>
       <Name>com.unity.cinemachine.editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.ProBuilder.AssetIdRemapUtility.csproj">
+      <Project>{2be550f0-0372-860f-d5e0-832a5a356d28}</Project>
+      <Name>Unity.ProBuilder.AssetIdRemapUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj">
       <Project>{c478b0a6-af6b-b1af-aaaf-a08427cc6bcb}</Project>
       <Name>Unity.VisualScripting.Shared.Editor</Name>
@@ -789,22 +806,6 @@
     <ProjectReference Include="Unity.VisualScripting.State.csproj">
       <Project>{5b348183-33f7-df1e-e3ce-78cba9b840e4}</Project>
       <Name>Unity.VisualScripting.State</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.ProBuilder.csproj">
-      <Project>{0bed7eb4-366b-c75c-5521-d5f490030553}</Project>
-      <Name>Unity.ProBuilder</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.ProBuilder.AddOns.Editor.csproj">
-      <Project>{617c0432-b482-728e-49ba-750ef79a69e7}</Project>
-      <Name>Unity.ProBuilder.AddOns.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.ProBuilder.Editor.csproj">
-      <Project>{c83bceec-dc2d-37e5-ca51-7e86a8f7bc19}</Project>
-      <Name>Unity.ProBuilder.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.ProBuilder.AssetIdRemapUtility.csproj">
-      <Project>{2be550f0-0372-860f-d5e0-832a5a356d28}</Project>
-      <Name>Unity.ProBuilder.AssetIdRemapUtility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

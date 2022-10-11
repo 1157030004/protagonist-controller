@@ -47,8 +47,8 @@
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\PendingChanges\PendingMergeLinks\MergeLinkListViewItem.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\UI\DrawTextBlockWithEndLink.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\UI\Tree\TableViewOperations.cs" />
-     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\History\HistorySelection.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Gluon\UpdateReport\UpdateReportListHeaderState.cs" />
+     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\History\HistorySelection.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\UI\PlasticDialog.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Inspector\DrawInspectorOperations.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\UI\Tree\TreeHeaderColumns.cs" />
@@ -58,8 +58,8 @@
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\UI\Progress\ProgressControlsForMigration.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Gluon\IncomingChangesNotifier.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\CloudProjectDownloader\CloudProjectDownloader.cs" />
-     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\IncomingChanges\Gluon\IncomingChangesTreeView.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\IncomingChanges\Developer\IncomingChangesViewMenu.cs" />
+     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\IncomingChanges\Gluon\IncomingChangesTreeView.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\PendingChanges\PendingChangesTab_Operations.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\Views\Changesets\ChangesetsListView.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.1\Editor\PlasticSCM\AssetMenu\AssetMenuOperations.cs" />
