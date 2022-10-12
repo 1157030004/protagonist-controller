@@ -20,6 +20,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.PhysicsUpdate();
 
+            RotateTowardsTargetRotation();
+
             if(!IsMovingHorizontally())
                 return;
 

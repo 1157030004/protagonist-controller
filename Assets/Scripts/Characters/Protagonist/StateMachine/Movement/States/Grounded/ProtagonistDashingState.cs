@@ -6,12 +6,13 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 {
     public class ProtagonistDashingState : ProtagonistGroundedState
     {
-        private ProtagonistDashData _dashData;
+        private ProtagonistDashData dashData;
         private float startTime;
         private int consecutiveDashesUsed;
+        private bool shouldKeepRotating;
         public ProtagonistDashingState(ProtagonistMovementStateMachine protagonistMovementStateMachine) : base(protagonistMovementStateMachine)
         {
-            _dashData = movementData.DashData;
+            dashData = movementData.DashData;
         }
 
         #region IState Methods
@@ -19,13 +20,33 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = _dashData.SpeedModifier;
+            stateMachine.ReusableData.MovementSpeedModifier = dashData.SpeedModifier;
+            stateMachine.ReusableData.RotationData = dashData.RotationData;
 
             AddForceOnTransitionFromStationaryState();
+
+            shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
 
             UpdateConsecutiveDashes();
 
             startTime = Time.time;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            SetBaseRotationData();
+        }
+
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+
+            if(!shouldKeepRotating)
+                return;
+
+            RotateTowardsTargetRotation();
         }
 
         public override void OnAnimationTransitionEvent()
@@ -50,6 +71,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             characterRotationDirection.y = 0f;
 
+            UpdateTargetRotation(characterRotationDirection, false);
+
             stateMachine.Protagonist.Rigidbody.velocity = characterRotationDirection * GetMovementSpeed();
         }
 
@@ -62,16 +85,32 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             ++consecutiveDashesUsed;
 
-            if(consecutiveDashesUsed == _dashData.ConsecutiveDashesLimitAmount)
+            if(consecutiveDashesUsed == dashData.ConsecutiveDashesLimitAmount)
             {
                 consecutiveDashesUsed = 0;
-                stateMachine.Protagonist.Input.DisableActionFor(stateMachine.Protagonist.Input.ProtagonistActions.Dash, _dashData.DashLimitReachCooldown);
+                stateMachine.Protagonist.Input.DisableActionFor(stateMachine.Protagonist.Input.ProtagonistActions.Dash, dashData.DashLimitReachCooldown);
             }
         }
 
         private bool IsConsecutive()
         {
-            return Time.time < startTime + _dashData.TimeToBeConsideredConsecutive;
+            return Time.time < startTime + dashData.TimeToBeConsideredConsecutive;
+        }
+        #endregion
+
+        #region Reusable Methods
+        protected override void AddInputActionCallbacks()
+        {
+            base.AddInputActionCallbacks();
+
+            stateMachine.Protagonist.Input.ProtagonistActions.Movement.performed += OnMovementPerformed;
+        }
+
+        protected override void RemoveInputActionCallbacks()
+        {
+            base.RemoveInputActionCallbacks();
+
+            stateMachine.Protagonist.Input.ProtagonistActions.Movement.performed -= OnMovementPerformed;
         }
         #endregion
 
@@ -80,6 +119,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
         }
+
+        private void OnMovementPerformed(InputAction.CallbackContext context)
+        {
+            shouldKeepRotating = true;
+        }
+
         protected override void OnDashStarted(InputAction.CallbackContext context)
         {
         }

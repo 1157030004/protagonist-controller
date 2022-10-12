@@ -21,7 +21,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         private void InitializeData()
         {
-            stateMachine.ReusableData.TimeToReachTargetRotation = movementData.BaseRotationData.TargetRotationReachTime;
+            SetBaseRotationData();
         }
 
         #region IState Methods
@@ -92,7 +92,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         private float Rotate(Vector3 direction)
         {
-            float directionAngle = UpgradeTargetRotation(direction);
+            float directionAngle = UpdateTargetRotation(direction);
 
             RotateTowardsTargetRotation();
 
@@ -124,6 +124,13 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #endregion
 
         #region Reusable Methods
+
+        protected void SetBaseRotationData()
+        {
+            stateMachine.ReusableData.RotationData = movementData.BaseRotationData;
+
+            stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
+        }
         protected Vector3 GetMovementInputDirection()
         {
             return new Vector3(stateMachine.ReusableData.MovementInput.x, 0f, stateMachine.ReusableData.MovementInput.y);
@@ -165,7 +172,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         }
         
-        protected float UpgradeTargetRotation(Vector3 direction, bool shouldConsiderCameraRotation = true)
+        protected float UpdateTargetRotation(Vector3 direction, bool shouldConsiderCameraRotation = true)
         {
             float directionAngle = GetDirectionAngle(direction);
 
@@ -215,6 +222,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             
             return protagonistHorizontalMovement.magnitude > minimumMagnitude;
         }
+        
         #endregion
 
         #region Input Methods

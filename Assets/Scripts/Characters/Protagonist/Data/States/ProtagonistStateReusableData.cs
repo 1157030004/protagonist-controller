@@ -52,5 +52,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             }
 
         }
+
+        public ProtagonistRotationData RotationData { get; set; }
     }
 }

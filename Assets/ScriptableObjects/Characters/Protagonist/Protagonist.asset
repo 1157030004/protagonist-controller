@@ -77,6 +77,12 @@ MonoBehaviour:
       <RunToWalkTime>k__BackingField: 0.5
     <DashData>k__BackingField:
       <SpeedModifier>k__BackingField: 2
+      <RotationData>k__BackingField:
+        <TargetRotationReachTime>k__BackingField: {x: 0, y: 0.02, z: 0}
       <TimeToBeConsideredConsecutive>k__BackingField: 1
       <ConsecutiveDashesLimitAmount>k__BackingField: 2
       <DashLimitReachCooldown>k__BackingField: 1.75
+    <StopData>k__BackingField:
+      <LightDecelerationForce>k__BackingField: 5
+      <MediumDecelerationForce>k__BackingField: 6.5
+      <HardDecelerationForce>k__BackingField: 5
