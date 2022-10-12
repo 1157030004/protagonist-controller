@@ -51,6 +51,18 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             Move();
         }
+        
+        public virtual void OnAnimationEnterEvent()
+        {
+        }
+
+        public virtual void OnAnimationExitEvent()
+        {
+        }
+
+        public virtual void OnAnimationTransitionEvent()
+        {
+        }
         #endregion
 
         #region Main Methods
@@ -119,12 +131,17 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         protected float GetMovementSpeed()
         {
-            return movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier;
+            return movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier * stateMachine.ReusableData.MovementOnSlopesSpeedModifier;
         }
 
         protected Vector3 GetProtagonistHorizontalVelocity()
         {
             return new Vector3(stateMachine.Protagonist.Rigidbody.velocity.x, 0f, stateMachine.Protagonist.Rigidbody.velocity.z);
+        }
+
+        protected Vector3 GetProtagonistVerticalVelocity()
+        {
+            return new Vector3(0f, stateMachine.Protagonist.Rigidbody.velocity.y, 0f);
         }
 
         protected void RotateTowardsTargetRotation()

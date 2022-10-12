@@ -10,6 +10,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public ProtagonistWalkingState WalkingState { get; }
         public ProtagonistRunningState RunningState { get; }
         public ProtagonistSprintingState SprintingState { get; }
+        public ProtagonistDashingState DashingState { get; }
         
         public ProtagonistMovementStateMachine(Protagonist protagonist)
         {
@@ -19,6 +20,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             WalkingState = new ProtagonistWalkingState(this);
             RunningState = new ProtagonistRunningState(this); 
             SprintingState = new ProtagonistSprintingState(this);
+            DashingState = new ProtagonistDashingState(this);
         }
 
     }

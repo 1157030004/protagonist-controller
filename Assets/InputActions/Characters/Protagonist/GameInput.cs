@@ -62,6 +62,15 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""processors"": ""Clamp(min=-0.1,max=0.1),Invert"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b2dc14b-1183-4fa6-87eb-5d2679591fce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -155,12 +164,56 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d8928f64-0ca1-4924-8d07-b4875e2a3b79"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""2de000fc-89ab-461c-9f8e-f8ae3261d9a5"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""479194cb-8e4b-494c-a20d-735c6147d61e"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdd4f3de-2a0d-4350-8c2e-4e3986c6124f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3def5f1-af3a-47b6-acd8-ef1c87faa81a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -175,6 +228,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         m_Protagonist_WalkToggle = m_Protagonist.FindAction("WalkToggle", throwIfNotFound: true);
         m_Protagonist_Look = m_Protagonist.FindAction("Look", throwIfNotFound: true);
         m_Protagonist_Zoom = m_Protagonist.FindAction("Zoom", throwIfNotFound: true);
+        m_Protagonist_Dash = m_Protagonist.FindAction("Dash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,6 +292,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Protagonist_WalkToggle;
     private readonly InputAction m_Protagonist_Look;
     private readonly InputAction m_Protagonist_Zoom;
+    private readonly InputAction m_Protagonist_Dash;
     public struct ProtagonistActions
     {
         private @GameInput m_Wrapper;
@@ -246,6 +301,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         public InputAction @WalkToggle => m_Wrapper.m_Protagonist_WalkToggle;
         public InputAction @Look => m_Wrapper.m_Protagonist_Look;
         public InputAction @Zoom => m_Wrapper.m_Protagonist_Zoom;
+        public InputAction @Dash => m_Wrapper.m_Protagonist_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Protagonist; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -267,6 +323,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Zoom.started -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnZoom;
                 @Zoom.performed -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnZoom;
                 @Zoom.canceled -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnZoom;
+                @Dash.started -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnDash;
             }
             m_Wrapper.m_ProtagonistActionsCallbackInterface = instance;
             if (instance != null)
@@ -283,6 +342,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
             }
         }
     }
@@ -293,5 +355,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         void OnWalkToggle(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
 }
