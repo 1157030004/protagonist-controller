@@ -48,6 +48,14 @@
      <Compile Include="Assets\Scripts\Characters\Protagonist\Utilities\Input\ProtagonistInput.cs" />
      <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraZoom.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\ProtagonistGroundedState.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\ScriptableObjects\ProtagonistSO.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\ProtagonistStateReusableData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\ProtagonistRotationData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\ProtagonistGroundedData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\Moving\ProtagonistWalkData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\Moving\ProtagonistRunData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistMovingState.cs" />
      <None Include="Assets\Materials\Prototypes\License.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

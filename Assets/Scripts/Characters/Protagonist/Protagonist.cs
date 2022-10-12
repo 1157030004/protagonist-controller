@@ -5,6 +5,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     [RequireComponent(typeof(ProtagonistInput))]
     public class Protagonist : MonoBehaviour
     {
+        [field: Header("References")]
+        [field: SerializeField] public ProtagonistSO Data { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
         public ProtagonistInput Input { get; private set; }
         public Transform MainCameraTransform { get; private set; }

@@ -1,26 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using Shadee.ProtagonistController.Characters.Protagonist;
-using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace Shadee.ProtagonistController
+namespace Shadee.ProtagonistController.Characters.Protagonist
 {
-    public class ProtagonistWalkingState : MonoBehaviour
+    public class ProtagonistWalkingState : ProtagonistMovingState
     {
-        public ProtagonistWalkingState(ProtagonistMovementStateMachine protagonistMovementStateMachine)
+        public ProtagonistWalkingState(ProtagonistMovementStateMachine protagonistMovementStateMachine) : base(protagonistMovementStateMachine)
         {
         }
 
-        // Start is called before the first frame update
-        void Start()
+        #region IState Methods
+        public override void Enter()
         {
-        
-        }
+            base.Enter();
 
-        // Update is called once per frame
-        void Update()
-        {
-        
+            stateMachine.ReusableData.MovementSpeedModifier = movementData.WalkData.SpeedModifier;
         }
+        #endregion
+
+        #region Input Methods
+        protected override void OnWalkToggleStarted(InputAction.CallbackContext context)
+        {
+            base.OnWalkToggleStarted(context);
+
+            stateMachine.ChangeState(stateMachine.RunningState);
+        }
+        #endregion
     }
 }

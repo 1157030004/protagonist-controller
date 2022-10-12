@@ -1,34 +1,33 @@
+using System;
+using UnityEngine;
+
 namespace Shadee.ProtagonistController.Characters.Protagonist
 {
-    public class ProtagonistIdlingState : ProtagonistMovementState
+    public class ProtagonistIdlingState : ProtagonistGroundedState
     {
         public ProtagonistIdlingState(ProtagonistMovementStateMachine protagonistMovementStateMachine) : base(protagonistMovementStateMachine)
         {
         }
 
+        #region IState Methods
         public override void Enter()
         {
             base.Enter();
-        }
 
-        public override void Exit()
-        {
-            base.Exit();
-        }
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
-        public override void HandleInput()
-        {
-            base.HandleInput();
-        }
-
-        public override void PhysicsUpdate()
-        {
-            base.PhysicsUpdate();
+            ResetVelocity();
         }
 
         public override void Update()
         {
             base.Update();
+
+            if(stateMachine.ReusableData.MovementInput == Vector2.zero)
+                return;
+
+            OnMove();
         }
+        #endregion
     }
 }

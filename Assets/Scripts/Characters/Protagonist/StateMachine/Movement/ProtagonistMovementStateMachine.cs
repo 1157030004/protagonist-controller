@@ -5,6 +5,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     public class ProtagonistMovementStateMachine : StateMachine
     {
         public Protagonist Protagonist { get; }
+        public ProtagonistStateReusableData ReusableData { get; }
         public ProtagonistIdlingState IdlingState { get; }
         public ProtagonistWalkingState WalkingState { get; }
         public ProtagonistRunningState RunningState { get; }
@@ -13,6 +14,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public ProtagonistMovementStateMachine(Protagonist protagonist)
         {
             Protagonist = protagonist;
+            ReusableData = new ProtagonistStateReusableData();
             IdlingState = new ProtagonistIdlingState(this);
             WalkingState = new ProtagonistWalkingState(this);
             RunningState = new ProtagonistRunningState(this); 

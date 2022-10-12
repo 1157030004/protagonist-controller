@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using Shadee.ProtagonistController.Characters.Protagonist;
 using UnityEngine;
 
-namespace Shadee.ProtagonistController
+namespace Shadee.ProtagonistController.Characters.Protagonist
 {
-    public class ProtagonistSprintingState : MonoBehaviour
+    public class ProtagonistSprintingState : ProtagonistMovingState
     {
-        public ProtagonistSprintingState(ProtagonistMovementStateMachine protagonistMovementStateMachine)
+        public ProtagonistSprintingState(ProtagonistMovementStateMachine protagonistMovementStateMachine) : base(protagonistMovementStateMachine)
         {
         }
+
 
         // Start is called before the first frame update
         void Start()

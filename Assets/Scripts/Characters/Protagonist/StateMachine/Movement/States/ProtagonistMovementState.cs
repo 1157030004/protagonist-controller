@@ -1,40 +1,40 @@
-using System;
+
 using Shadee.ProtagonistController.StateMachines;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Shadee.ProtagonistController.Characters.Protagonist
 {
     public class ProtagonistMovementState : IState
     {
         protected ProtagonistMovementStateMachine stateMachine;
-        protected Vector2 movementInput;
-        protected float baseSpeed = 5f;
-        protected float speedModifier = 1f;
-        protected Vector3 currentTargetRotation;
-        protected Vector3 timeToReachTargetRotation;
-        protected Vector3 dampedTargetRotationCurrentVelocity;
-        protected Vector3 dampedTargetRotationPassedTime;
+
+        protected ProtagonistGroundedData movementData;
+
         public ProtagonistMovementState(ProtagonistMovementStateMachine protagonistMovementStateMachine)
         {
             stateMachine = protagonistMovementStateMachine;
+            movementData = stateMachine.Protagonist.Data.GroundedData;
 
             InitializeData();
         }
 
         private void InitializeData()
         {
-            timeToReachTargetRotation.y = 0.14f;
+            stateMachine.ReusableData.TimeToReachTargetRotation = movementData.BaseRotationData.TargetRotationReachTime;
         }
 
         #region IState Methods
         public virtual void Enter()
         {
             Debug.Log("State: " + GetType().Name);
+
+            AddInputActionCallbacks();
         }
 
         public virtual void Exit()
         {
-
+            RemoveInputActionCallbacks();
         }
 
         public virtual void HandleInput()
@@ -56,12 +56,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region Main Methods
         private void ReadMovementInput() 
         {
-            movementInput = stateMachine.Protagonist.Input.ProtagonistActions.Movement.ReadValue<Vector2>();
+            stateMachine.ReusableData.MovementInput = stateMachine.Protagonist.Input.ProtagonistActions.Movement.ReadValue<Vector2>();
         }
 
         private void Move()
         {
-            if(movementInput == Vector2.zero || speedModifier == 0)
+            if(stateMachine.ReusableData.MovementInput == Vector2.zero || stateMachine.ReusableData.MovementSpeedModifier == 0)
                 return;
             
             Vector3 movementDirection = GetMovementInputDirection();
@@ -89,9 +89,9 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         private void UpdateTargetRotationData(float targetAngle)
         {
-            currentTargetRotation.y = targetAngle;
+            stateMachine.ReusableData.CurrentTargetRotation.y = targetAngle;
 
-            dampedTargetRotationPassedTime.y = 0f;
+            stateMachine.ReusableData.DampedTargetRotationPassedTime.y = 0f;
         }
 
         private static float GetDirectionAngle(Vector3 direction)
@@ -114,12 +114,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region Reusable Methods
         protected Vector3 GetMovementInputDirection()
         {
-            return new Vector3(movementInput.x, 0f, movementInput.y);
+            return new Vector3(stateMachine.ReusableData.MovementInput.x, 0f, stateMachine.ReusableData.MovementInput.y);
         }
 
         protected float GetMovementSpeed()
         {
-            return baseSpeed * speedModifier;
+            return movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier;
         }
 
         protected Vector3 GetProtagonistHorizontalVelocity()
@@ -131,16 +131,16 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             float currentYAngle = stateMachine.Protagonist.Rigidbody.rotation.eulerAngles.y;
 
-            if(currentYAngle == currentTargetRotation.y)
+            if(currentYAngle == stateMachine.ReusableData.CurrentTargetRotation.y)
                 return;
             
             float smoothYAngle = Mathf.SmoothDampAngle(
                 currentYAngle, 
-                currentTargetRotation.y, 
-                ref dampedTargetRotationCurrentVelocity.y, 
-                timeToReachTargetRotation.y - dampedTargetRotationPassedTime.y);
+                stateMachine.ReusableData.CurrentTargetRotation.y, 
+                ref stateMachine.ReusableData.DampedTargetRotationCurrentVelocity.y, 
+                stateMachine.ReusableData.TimeToReachTargetRotation.y - stateMachine.ReusableData.DampedTargetRotationPassedTime.y);
 
-            dampedTargetRotationPassedTime.y += Time.deltaTime;
+            stateMachine.ReusableData.DampedTargetRotationPassedTime.y += Time.deltaTime;
 
             Quaternion targetRotation = Quaternion.Euler(0f, smoothYAngle, 0f);
 
@@ -157,7 +157,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
                 directionAngle = AddCameraRotationToAngle(directionAngle);
             }
 
-            if (directionAngle != currentTargetRotation.y)
+            if (directionAngle != stateMachine.ReusableData.CurrentTargetRotation.y)
             {
                 UpdateTargetRotationData(directionAngle);
             }
@@ -168,6 +168,28 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected Vector3 GetTargetRotationDirection(float targetAngle)
         {
             return Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        }
+        
+        protected void ResetVelocity()
+        {
+            stateMachine.Protagonist.Rigidbody.velocity = Vector3.zero;
+        }
+
+        protected virtual void AddInputActionCallbacks()
+        {
+            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started += OnWalkToggleStarted;
+        }
+
+        protected virtual void RemoveInputActionCallbacks()
+        {
+            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started -= OnWalkToggleStarted;   
+        }
+        #endregion
+
+        #region Input Methods
+        protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
         }
         #endregion
     }
