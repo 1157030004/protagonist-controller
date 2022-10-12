@@ -71,6 +71,15 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""f7df799c-2a6a-4d12-b7d7-71d3cf3c1e79"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -216,6 +225,39 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e1d05da-42e3-4a4a-915d-f75fed399409"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a11f3b36-c45f-4e54-b23a-22c57dfdab50"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2942923c-6b80-4bd1-9810-c20f7c7c71d9"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -229,6 +271,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         m_Protagonist_Look = m_Protagonist.FindAction("Look", throwIfNotFound: true);
         m_Protagonist_Zoom = m_Protagonist.FindAction("Zoom", throwIfNotFound: true);
         m_Protagonist_Dash = m_Protagonist.FindAction("Dash", throwIfNotFound: true);
+        m_Protagonist_Sprint = m_Protagonist.FindAction("Sprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -293,6 +336,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Protagonist_Look;
     private readonly InputAction m_Protagonist_Zoom;
     private readonly InputAction m_Protagonist_Dash;
+    private readonly InputAction m_Protagonist_Sprint;
     public struct ProtagonistActions
     {
         private @GameInput m_Wrapper;
@@ -302,6 +346,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Protagonist_Look;
         public InputAction @Zoom => m_Wrapper.m_Protagonist_Zoom;
         public InputAction @Dash => m_Wrapper.m_Protagonist_Dash;
+        public InputAction @Sprint => m_Wrapper.m_Protagonist_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_Protagonist; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -326,6 +371,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnDash;
+                @Sprint.started -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnSprint;
+                @Sprint.performed -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnSprint;
+                @Sprint.canceled -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnSprint;
             }
             m_Wrapper.m_ProtagonistActionsCallbackInterface = instance;
             if (instance != null)
@@ -345,6 +393,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
             }
         }
     }
@@ -356,5 +407,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
 }

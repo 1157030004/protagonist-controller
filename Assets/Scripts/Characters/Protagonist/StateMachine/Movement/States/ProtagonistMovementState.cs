@@ -201,6 +201,20 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started -= OnWalkToggleStarted;   
         }
+        
+        protected void DecelerateHorizontally()
+        {
+            Vector3 protagonistHorizontalVelocity = GetProtagonistHorizontalVelocity();
+            stateMachine.Protagonist.Rigidbody.AddForce(-protagonistHorizontalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
+        }
+
+        protected bool IsMovingHorizontally(float minimumMagnitude = 0.1f)
+        {
+            Vector3 protagonistHorizontalVelocity = GetProtagonistHorizontalVelocity();
+            Vector2 protagonistHorizontalMovement = new Vector2(protagonistHorizontalVelocity.x, protagonistHorizontalVelocity.z);
+            
+            return protagonistHorizontalMovement.magnitude > minimumMagnitude;
+        }
         #endregion
 
         #region Input Methods
