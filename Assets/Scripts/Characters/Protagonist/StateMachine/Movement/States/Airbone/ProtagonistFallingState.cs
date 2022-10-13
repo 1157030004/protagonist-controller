@@ -8,6 +8,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     public class ProtagonistFallingState : ProtagonistAirboneState
     {
         private ProtagonistFallData fallData;
+        private Vector3 protagonistPositionOnEnter;
         public ProtagonistFallingState(ProtagonistMovementStateMachine protagonistMovementStateMachine) : base(protagonistMovementStateMachine)
         {
             fallData = airboneData.FallData;
@@ -17,6 +18,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public override void Enter()
         {
             base.Enter();
+
+            protagonistPositionOnEnter = stateMachine.Protagonist.transform.position;
 
             stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
@@ -34,6 +37,25 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region Reusable Methods
         protected override void ResetSprintState()
         {
+        }
+
+        protected override void OnContactWithGround(Collider collider)
+        {
+            float fallDistance = Mathf.Abs(protagonistPositionOnEnter.y - stateMachine.Protagonist.transform.position.y);
+
+            if(fallDistance < fallData.MinimumDistanceTobeConsideredHardFall)
+            {
+                stateMachine.ChangeState(stateMachine.LightLandingState);
+                return;
+            }
+
+            if(stateMachine.ReusableData.ShouldWalk && !stateMachine.ReusableData.ShouldSprint || stateMachine.ReusableData.MovementInput == Vector2.zero)
+            {
+                stateMachine.ChangeState(stateMachine.HardLandingState);
+                return;
+            }
+
+            stateMachine.ChangeState(stateMachine.RollingState);
         }
         #endregion
     

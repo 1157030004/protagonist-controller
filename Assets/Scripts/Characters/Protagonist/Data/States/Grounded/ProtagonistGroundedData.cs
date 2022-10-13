@@ -15,5 +15,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         [field: SerializeField] public ProtagonistSprintData SprintData { get; private set; }
         [field: SerializeField] public ProtagonistDashData DashData { get; private set; }
         [field: SerializeField] public ProtagonistStopData StopData { get; private set; }   
+        [field: SerializeField] public ProtagonistRollData RollData { get; private set; }   
     }
 }

@@ -15,6 +15,10 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public ProtagonistMediumStoppingState MediumStoppingState { get; }
         public ProtagonistHardStoppingState HardStoppingState { get; }
 
+        public ProtagonistLightLandingState LightLandingState { get; }
+        public ProtagonistRollingState RollingState { get; }
+        public ProtagonistHardLandingState HardLandingState { get; }
+
         public ProtagonistJumpingState JumpingState { get; }
         public ProtagonistFallingState FallingState { get; }
         
@@ -33,6 +37,10 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             LightStoppingState = new ProtagonistLightStoppingState(this);
             MediumStoppingState = new ProtagonistMediumStoppingState(this);
             HardStoppingState = new ProtagonistHardStoppingState(this);
+
+            LightLandingState = new ProtagonistLightLandingState(this);
+            RollingState = new ProtagonistRollingState(this);
+            HardLandingState = new ProtagonistHardLandingState(this);
             
             JumpingState = new ProtagonistJumpingState(this);
             FallingState = new ProtagonistFallingState(this);
