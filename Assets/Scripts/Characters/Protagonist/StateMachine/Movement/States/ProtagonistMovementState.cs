@@ -1,4 +1,5 @@
 
+using System;
 using Shadee.ProtagonistController.StateMachines;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,11 +11,13 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected ProtagonistMovementStateMachine stateMachine;
 
         protected ProtagonistGroundedData movementData;
+        protected ProtagonistAirboneData airboneData;
 
         public ProtagonistMovementState(ProtagonistMovementStateMachine protagonistMovementStateMachine)
         {
             stateMachine = protagonistMovementStateMachine;
             movementData = stateMachine.Protagonist.Data.GroundedData;
+            airboneData = stateMachine.Protagonist.Data.AirboneData;
 
             InitializeData();
         }
@@ -62,6 +65,16 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         public virtual void OnAnimationTransitionEvent()
         {
+        }
+        
+        public virtual void OnTriggerEnter(Collider collider)
+        {
+            if(stateMachine.Protagonist.LayerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                OnContactWithGround(collider);
+
+                return;
+            }
         }
         #endregion
 
@@ -214,6 +227,11 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             Vector3 protagonistHorizontalVelocity = GetProtagonistHorizontalVelocity();
             stateMachine.Protagonist.Rigidbody.AddForce(-protagonistHorizontalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
         }
+        protected void DecelerateVertically()
+        {
+            Vector3 protagonistVerticalVelocity = GetProtagonistVerticalVelocity();
+            stateMachine.Protagonist.Rigidbody.AddForce(-protagonistVerticalVelocity * stateMachine.ReusableData.MovementDecelerationForce, ForceMode.Acceleration);
+        }
 
         protected bool IsMovingHorizontally(float minimumMagnitude = 0.1f)
         {
@@ -222,7 +240,19 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             
             return protagonistHorizontalMovement.magnitude > minimumMagnitude;
         }
-        
+
+        protected bool IsMovingUp(float minimumVelocity = 0.1f)
+        {
+            return GetProtagonistVerticalVelocity().y > minimumVelocity;
+        }
+        protected bool IsMovingDown(float minimumVelocity = 0.1f)
+        {
+            return GetProtagonistVerticalVelocity().y < -minimumVelocity;
+        }
+
+        protected virtual void OnContactWithGround(Collider collider)
+        {
+        }
         #endregion
 
         #region Input Methods

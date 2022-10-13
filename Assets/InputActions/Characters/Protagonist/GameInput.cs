@@ -80,6 +80,15 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b5eb532-adf0-482b-bc17-58b8dee3477a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,6 +267,28 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9da1832-fb8e-4043-8168-bff6364819ee"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d82f1ec7-0c12-45b0-a8de-dca25fd76c0b"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -272,6 +303,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         m_Protagonist_Zoom = m_Protagonist.FindAction("Zoom", throwIfNotFound: true);
         m_Protagonist_Dash = m_Protagonist.FindAction("Dash", throwIfNotFound: true);
         m_Protagonist_Sprint = m_Protagonist.FindAction("Sprint", throwIfNotFound: true);
+        m_Protagonist_Jump = m_Protagonist.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,6 +369,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Protagonist_Zoom;
     private readonly InputAction m_Protagonist_Dash;
     private readonly InputAction m_Protagonist_Sprint;
+    private readonly InputAction m_Protagonist_Jump;
     public struct ProtagonistActions
     {
         private @GameInput m_Wrapper;
@@ -347,6 +380,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         public InputAction @Zoom => m_Wrapper.m_Protagonist_Zoom;
         public InputAction @Dash => m_Wrapper.m_Protagonist_Dash;
         public InputAction @Sprint => m_Wrapper.m_Protagonist_Sprint;
+        public InputAction @Jump => m_Wrapper.m_Protagonist_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Protagonist; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -374,6 +408,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Sprint.started -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnSprint;
+                @Jump.started -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_ProtagonistActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_ProtagonistActionsCallbackInterface = instance;
             if (instance != null)
@@ -396,6 +433,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -408,5 +448,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         void OnZoom(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

@@ -43,6 +43,11 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             _movementStateMachine.ChangeState(_movementStateMachine.IdlingState);
         }
 
+        private void OnTriggerEnter(Collider collider) 
+        {
+            _movementStateMachine.OnTriggerEnter(collider);    
+        }
+
         private void Update() 
         {
             _movementStateMachine.HandleInput();

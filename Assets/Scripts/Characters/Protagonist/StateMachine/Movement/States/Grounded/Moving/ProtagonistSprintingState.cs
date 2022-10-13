@@ -9,6 +9,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         private ProtagonistSprintData sprintData;
         private float startTime;
         private bool keepSprinting;
+        private bool shouldResetSprintState;
         public ProtagonistSprintingState(ProtagonistMovementStateMachine protagonistMovementStateMachine) : base(protagonistMovementStateMachine)
         {
             sprintData = movementData.SprintData;
@@ -20,6 +21,9 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             base.Enter();
 
             stateMachine.ReusableData.MovementSpeedModifier = sprintData.SpeedModifier;
+            stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.StrongForce;
+
+            shouldResetSprintState = true;
 
             startTime = Time.time;
         }
@@ -28,7 +32,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.Exit();
 
-            keepSprinting = false;
+            if(shouldResetSprintState)
+            {
+                keepSprinting = false;
+                stateMachine.ReusableData.ShouldSprint = false;
+            }
+
         }
 
         public override void Update()
@@ -81,9 +90,17 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             stateMachine.ChangeState(stateMachine.HardStoppingState);
         }
+
+        protected override void OnJumpStarted(InputAction.CallbackContext context)
+        {
+            shouldResetSprintState = false;
+            base.OnJumpStarted(context);
+        }
         private void OnSprintPerfomed(InputAction.CallbackContext context)
         {
             keepSprinting = true;
+
+            stateMachine.ReusableData.ShouldSprint = true;
         }
 
         #endregion

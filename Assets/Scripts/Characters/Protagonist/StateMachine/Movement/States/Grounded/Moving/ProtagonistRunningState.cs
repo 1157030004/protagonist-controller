@@ -19,6 +19,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             base.Enter();
 
             stateMachine.ReusableData.MovementSpeedModifier = movementData.RunData.SpeedModifier;
+            stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.MediumForce;
             startTime = Time.time;
         }
 

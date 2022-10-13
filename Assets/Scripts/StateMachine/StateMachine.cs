@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Shadee.ProtagonistController.StateMachines
 {
     public abstract class StateMachine
@@ -37,6 +39,11 @@ namespace Shadee.ProtagonistController.StateMachines
         public void OnAnimationTransitionEvent()
         {
             currentState?.OnAnimationTransitionEvent();
+        }
+
+        public void OnTriggerEnter(Collider collider)
+        {
+            currentState?.OnTriggerEnter(collider);
         }
     }
 }

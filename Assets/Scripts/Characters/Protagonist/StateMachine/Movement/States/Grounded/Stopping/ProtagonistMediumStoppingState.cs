@@ -13,6 +13,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             base.Enter();
 
             stateMachine.ReusableData.MovementDecelerationForce = movementData.StopData.MediumDecelerationForce;
+            stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.MediumForce;
         }
         #endregion
     }

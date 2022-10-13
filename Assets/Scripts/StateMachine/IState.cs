@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Shadee.ProtagonistController.StateMachines
 {
     public interface IState
@@ -10,5 +12,6 @@ namespace Shadee.ProtagonistController.StateMachines
         public void OnAnimationEnterEvent();
         public void OnAnimationExitEvent();
         public void OnAnimationTransitionEvent();
+        public void OnTriggerEnter(Collider collider);
     }
 }

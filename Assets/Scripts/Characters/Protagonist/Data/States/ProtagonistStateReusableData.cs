@@ -11,6 +11,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public float MovementOnSlopesSpeedModifier { get; set; } = 1f;
         public float MovementDecelerationForce { get; set; } = 1f;
         public bool ShouldWalk { get; set; }
+        public bool ShouldSprint { get; set; }
 
         private Vector3 currentTargetRotation;
         private Vector3 timeToReachTargetRotation;
@@ -52,6 +53,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             }
 
         }
+
+        public Vector3 CurrentJumpForce { get; set; }
 
         public ProtagonistRotationData RotationData { get; set; }
     }

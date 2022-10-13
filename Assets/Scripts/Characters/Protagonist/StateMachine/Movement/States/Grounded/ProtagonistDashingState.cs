@@ -21,6 +21,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             base.Enter();
 
             stateMachine.ReusableData.MovementSpeedModifier = dashData.SpeedModifier;
+            stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.StrongForce;
             stateMachine.ReusableData.RotationData = dashData.RotationData;
 
             AddForceOnTransitionFromStationaryState();

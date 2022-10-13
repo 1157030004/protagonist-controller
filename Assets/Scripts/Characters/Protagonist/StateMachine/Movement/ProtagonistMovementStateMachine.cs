@@ -14,19 +14,26 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public ProtagonistLightStoppingState LightStoppingState { get; }
         public ProtagonistMediumStoppingState MediumStoppingState { get; }
         public ProtagonistHardStoppingState HardStoppingState { get; }
+
+        public ProtagonistJumpingState JumpingState { get; }
         
         public ProtagonistMovementStateMachine(Protagonist protagonist)
         {
             Protagonist = protagonist;
             ReusableData = new ProtagonistStateReusableData();
+
             IdlingState = new ProtagonistIdlingState(this);
+            DashingState = new ProtagonistDashingState(this);
+
             WalkingState = new ProtagonistWalkingState(this);
             RunningState = new ProtagonistRunningState(this); 
             SprintingState = new ProtagonistSprintingState(this);
-            DashingState = new ProtagonistDashingState(this);
+
             LightStoppingState = new ProtagonistLightStoppingState(this);
             MediumStoppingState = new ProtagonistMediumStoppingState(this);
             HardStoppingState = new ProtagonistHardStoppingState(this);
+            
+            JumpingState = new ProtagonistJumpingState(this);
         }
 
     }

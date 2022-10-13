@@ -6,5 +6,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     public class ProtagonistSO : ScriptableObject
     {
         [field: SerializeField] public ProtagonistGroundedData GroundedData { get; private set; }
+        [field: SerializeField] public ProtagonistAirboneData AirboneData { get; private set; }
     }
 }

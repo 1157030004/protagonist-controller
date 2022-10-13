@@ -14,6 +14,14 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         }
 
         #region IState Methods
+
+        public override void Enter()
+        {
+            base.Enter();
+
+            UpdateShouldSpritnState();
+        }
+
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
@@ -23,6 +31,17 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #endregion
 
         #region Main Methods
+
+        private void UpdateShouldSpritnState()
+        {
+            if(!stateMachine.ReusableData.ShouldSprint)
+                return;
+            
+            if(stateMachine.ReusableData.MovementInput != Vector2.zero)
+                return;
+
+            stateMachine.ReusableData.ShouldSprint = false;
+        }
         private void Float()
         {
             Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Protagonist.ColliderUtility.CapsuleColliderData.Collider.bounds.center;
@@ -74,6 +93,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             stateMachine.Protagonist.Input.ProtagonistActions.Movement.canceled += OnMovementCanceled;
 
             stateMachine.Protagonist.Input.ProtagonistActions.Dash.started += OnDashStarted;
+
+            stateMachine.Protagonist.Input.ProtagonistActions.Jump.started += OnJumpStarted;
         }
 
         protected override void RemoveInputActionCallbacks()
@@ -83,10 +104,17 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             stateMachine.Protagonist.Input.ProtagonistActions.Movement.canceled -= OnMovementCanceled;
 
             stateMachine.Protagonist.Input.ProtagonistActions.Dash.started -= OnDashStarted;
+
+            stateMachine.Protagonist.Input.ProtagonistActions.Jump.started -= OnJumpStarted;
         }
         
         protected virtual void OnMove()
         {
+            if(stateMachine.ReusableData.ShouldSprint)
+            {
+                stateMachine.ChangeState(stateMachine.SprintingState);
+                return;
+            }
             if(stateMachine.ReusableData.ShouldWalk)
             {
                 stateMachine.ChangeState(stateMachine.WalkingState);
@@ -113,6 +141,11 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
             stateMachine.ChangeState(stateMachine.DashingState);
+        }
+
+        protected virtual void OnJumpStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.JumpingState);
         }
         #endregion
     }
