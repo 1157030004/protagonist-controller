@@ -82,6 +82,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             stateMachine.Protagonist.Input.ProtagonistActions.Sprint.performed -= OnSprintPerfomed;
         }
+
+        protected override void OnFall()
+        {
+            shouldResetSprintState = false;
+            base.OnFall();
+        }
         #endregion
 
         #region Input Methods

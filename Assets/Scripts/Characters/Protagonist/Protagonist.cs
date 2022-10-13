@@ -11,14 +11,14 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         [field: SerializeField] public ProtagonistSO Data { get; private set; }
 
         [field: Header("Collisions")]
-        [field: SerializeField] public CapsuleColliderUtility ColliderUtility { get; private set; }
+        [field: SerializeField] public ProtagonistCapsuleColliderUtility ColliderUtility { get; private set; }
         [field: SerializeField] public ProtagonistLayerData LayerData { get; private set; }
 
         public Rigidbody Rigidbody { get; private set; }
         public ProtagonistInput Input { get; private set; }
         public Transform MainCameraTransform { get; private set; }
 
-        private ProtagonistMovementStateMachine _movementStateMachine;
+        private ProtagonistMovementStateMachine movementStateMachine;
 
         private void Awake() 
         {
@@ -29,7 +29,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             ColliderUtility.CalculateCapsuleColliderDimentions();
 
             MainCameraTransform = Camera.main.transform;
-            _movementStateMachine = new ProtagonistMovementStateMachine(this);    
+            movementStateMachine = new ProtagonistMovementStateMachine(this);    
         }
 
         private void OnValidate() 
@@ -40,23 +40,28 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         private void Start() 
         {
-            _movementStateMachine.ChangeState(_movementStateMachine.IdlingState);
+            movementStateMachine.ChangeState(movementStateMachine.IdlingState);
         }
 
         private void OnTriggerEnter(Collider collider) 
         {
-            _movementStateMachine.OnTriggerEnter(collider);    
+            movementStateMachine.OnTriggerEnter(collider);    
+        }
+
+        private void OnTriggerExit(Collider collider) 
+        {
+            movementStateMachine.OnTriggerExit(collider);    
         }
 
         private void Update() 
         {
-            _movementStateMachine.HandleInput();
-            _movementStateMachine.Update();
+            movementStateMachine.HandleInput();
+            movementStateMachine.Update();
         }
 
         private void FixedUpdate() 
         {
-            _movementStateMachine.PhysicsUpdate();
+            movementStateMachine.PhysicsUpdate();
         }
 
     }

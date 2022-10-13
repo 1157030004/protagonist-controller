@@ -76,6 +76,16 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
                 return;
             }
         }
+
+        public virtual void OnTriggerExit(Collider collider)
+        {
+            if(stateMachine.Protagonist.LayerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                OnContactWithGroundExited(collider);
+
+                return;
+            }
+        }
         #endregion
 
         #region Main Methods
@@ -144,6 +154,16 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             stateMachine.ReusableData.TimeToReachTargetRotation = stateMachine.ReusableData.RotationData.TargetRotationReachTime;
         }
+        
+        protected virtual void AddInputActionCallbacks()
+        {
+            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started += OnWalkToggleStarted;
+        }
+
+        protected virtual void RemoveInputActionCallbacks()
+        {
+            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started -= OnWalkToggleStarted;   
+        }
         protected Vector3 GetMovementInputDirection()
         {
             return new Vector3(stateMachine.ReusableData.MovementInput.x, 0f, stateMachine.ReusableData.MovementInput.y);
@@ -211,17 +231,14 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             stateMachine.Protagonist.Rigidbody.velocity = Vector3.zero;
         }
-
-        protected virtual void AddInputActionCallbacks()
-        {
-            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started += OnWalkToggleStarted;
-        }
-
-        protected virtual void RemoveInputActionCallbacks()
-        {
-            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started -= OnWalkToggleStarted;   
-        }
         
+        protected void ResetVerticalVelocity()
+        {
+            Vector3 protagonistHorizontalVelocity = GetProtagonistHorizontalVelocity();
+
+            stateMachine.Protagonist.Rigidbody.velocity = protagonistHorizontalVelocity;
+        }
+
         protected void DecelerateHorizontally()
         {
             Vector3 protagonistHorizontalVelocity = GetProtagonistHorizontalVelocity();
@@ -251,6 +268,10 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         }
 
         protected virtual void OnContactWithGround(Collider collider)
+        {
+        }
+        
+        protected virtual void OnContactWithGroundExited(Collider collider)
         {
         }
         #endregion

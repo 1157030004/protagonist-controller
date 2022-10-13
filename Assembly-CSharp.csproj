@@ -73,6 +73,10 @@
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Airbone\ProtagonistJumpingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Airbone\ProtagonistAirboneData.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Airbone\ProtagonistJumpData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Airbone\ProtagonistFallingState.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\Colliders\ProtagonistTriggerColliderData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Utilities\Colliders\ProtagonistCapsuleColliderUtility.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Airbone\ProtagonistFallData.cs" />
      <None Include="Assets\Materials\Prototypes\License.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

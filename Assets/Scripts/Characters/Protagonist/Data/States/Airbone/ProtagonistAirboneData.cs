@@ -9,5 +9,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     public class ProtagonistAirboneData
     {
         [field: SerializeField] public ProtagonistJumpData JumpData { get; private set; }
+        [field: SerializeField] public ProtagonistFallData FallData { get; private set; }
     }
 }

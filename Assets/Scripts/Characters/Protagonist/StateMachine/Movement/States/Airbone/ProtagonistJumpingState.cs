@@ -9,6 +9,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     {
         private bool shouldKeepRotating;
         private ProtagonistJumpData jumpData;
+        private bool canStartFalling;
         public ProtagonistJumpingState(ProtagonistMovementStateMachine protagonistMovementStateMachine) : base(protagonistMovementStateMachine)
         {
             jumpData = airboneData.JumpData;
@@ -33,6 +34,23 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             base.Exit();
 
             SetBaseRotationData();
+
+            canStartFalling = false;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if(!canStartFalling && IsMovingUp(0f))
+            {
+                canStartFalling = true;
+            }
+
+            if(!canStartFalling || GetProtagonistVerticalVelocity().y > 0)
+                return;
+
+            stateMachine.ChangeState(stateMachine.FallingState);
         }
 
         public override void PhysicsUpdate()

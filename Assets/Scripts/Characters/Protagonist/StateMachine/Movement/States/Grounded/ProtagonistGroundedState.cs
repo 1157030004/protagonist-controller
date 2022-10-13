@@ -83,6 +83,21 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             return slopeSpeedModifier;
         }
+       
+        private bool IsThereGroundUnderneath()
+        {
+            BoxCollider groundCheckCollider = stateMachine.Protagonist.ColliderUtility.TriggerColliderData.GroundCheckCollider;
+            Vector3 groundColliderCenterInWorldSpace = groundCheckCollider.bounds.center;
+
+            Collider[] overlappedGroundColliders = Physics.OverlapBox(
+                groundColliderCenterInWorldSpace, 
+                groundCheckCollider.bounds.extents, 
+                groundCheckCollider.transform.rotation, 
+                stateMachine.Protagonist.LayerData.GroundLayer, 
+                QueryTriggerInteraction.Ignore);
+
+            return overlappedGroundColliders.Length > 0;
+        }
         #endregion
 
         #region Reusable Methods
@@ -122,6 +137,36 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             }
 
             stateMachine.ChangeState(stateMachine.RunningState);
+        }
+
+        protected override void OnContactWithGroundExited(Collider collider)
+        {
+            base.OnContactWithGroundExited(collider);
+
+            if(IsThereGroundUnderneath())
+                return;
+
+
+            Vector3 capsuleColliderCenterInWorldSpace = stateMachine.Protagonist.ColliderUtility.CapsuleColliderData.Collider.bounds.center;
+
+            Ray downwardsRayFromCapsuleBottom = new Ray(
+                capsuleColliderCenterInWorldSpace - stateMachine.Protagonist.ColliderUtility.CapsuleColliderData.ColliderVerticalExtents,
+                Vector3.down);
+
+            if(!Physics.Raycast(
+                downwardsRayFromCapsuleBottom,
+                out _, 
+                movementData.GroundToFallRayDistance, 
+                stateMachine.Protagonist.LayerData.GroundLayer, 
+                QueryTriggerInteraction.Ignore))
+            {
+                OnFall();
+            }
+        }
+
+        protected virtual void OnFall()
+        {
+            stateMachine.ChangeState(stateMachine.FallingState);
         }
         #endregion
 
