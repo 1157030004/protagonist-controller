@@ -184,6 +184,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #endregion
 
         #region Input Methods
+        
         protected override void OnWalkToggleStarted(InputAction.CallbackContext context)
         {
             base.OnWalkToggleStarted(context);
@@ -199,6 +200,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected virtual void OnJumpStarted(InputAction.CallbackContext context)
         {
             stateMachine.ChangeState(stateMachine.JumpingState);
+        }
+        
+        protected override void OnMovementPerformed(InputAction.CallbackContext context)
+        {
+            base.OnMovementPerformed(context);
+            UpdateTargetRotation(GetMovementInputDirection());
         }
         #endregion
     }

@@ -124,7 +124,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         #region Input Methods
 
-        private void OnMovementPerformed(InputAction.CallbackContext context)
+        protected override void OnMovementPerformed(InputAction.CallbackContext context)
         {
             shouldKeepRotating = true;
         }

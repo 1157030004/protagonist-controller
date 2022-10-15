@@ -34,7 +34,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region IState Methods
         public virtual void Enter()
         {
-            // Debug.Log("State: " + GetType().Name);
+            Debug.Log("State: " + GetType().Name);
 
             AddInputActionCallbacks();
         }
@@ -380,7 +380,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
         }
 
-        private void OnMovementPerformed(InputAction.CallbackContext context)
+        protected virtual void OnMovementPerformed(InputAction.CallbackContext context)
         {
             UpdateCameraRecenteringState(context.ReadValue<Vector2>());
         }

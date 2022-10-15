@@ -13,6 +13,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             base.Enter();
 
             StartAnimation(stateMachine.Protagonist.AnimationData.LandingParameterHash);
+
+            DisableCameraRecentering();
         }
 
         public override void Exit()

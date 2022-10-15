@@ -26,8 +26,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.StrongForce;
 
             shouldResetSprintState = true;
-
             startTime = Time.time;
+            
+            if(!stateMachine.ReusableData.ShouldSprint)
+            {
+                keepSprinting = false;
+            }
         }
 
         public override void Exit()
