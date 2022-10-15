@@ -18,13 +18,15 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = dashData.SpeedModifier;
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = dashData.SpeedModifier;
+            StartAnimation(stateMachine.Protagonist.AnimationData.DashParameterHash);
+
             stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.StrongForce;
             stateMachine.ReusableData.RotationData = dashData.RotationData;
 
-            AddForceOnTransitionFromStationaryState();
+            Dash();
 
             shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
 
@@ -36,6 +38,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public override void Exit()
         {
             base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.DashParameterHash);
 
             SetBaseRotationData();
         }
@@ -63,18 +67,21 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #endregion
 
         #region Main Methods
-        private void AddForceOnTransitionFromStationaryState()
+        private void Dash()
         {
-            if(stateMachine.ReusableData.MovementInput != Vector2.zero)
-                return;
+            Vector3 dashDirection = stateMachine.Protagonist.transform.forward;
+
+            dashDirection.y = 0f;
+
+            UpdateTargetRotation(dashDirection, false);
             
-            Vector3 characterRotationDirection = stateMachine.Protagonist.transform.forward;
+            if(stateMachine.ReusableData.MovementInput != Vector2.zero)
+            {
+                UpdateTargetRotation(GetMovementInputDirection());
+                dashDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
+            }
 
-            characterRotationDirection.y = 0f;
-
-            UpdateTargetRotation(characterRotationDirection, false);
-
-            stateMachine.Protagonist.Rigidbody.velocity = characterRotationDirection * GetMovementSpeed();
+            stateMachine.Protagonist.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
         }
 
         private void UpdateConsecutiveDashes()
@@ -116,10 +123,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #endregion
 
         #region Input Methods
-
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-        }
 
         private void OnMovementPerformed(InputAction.CallbackContext context)
         {

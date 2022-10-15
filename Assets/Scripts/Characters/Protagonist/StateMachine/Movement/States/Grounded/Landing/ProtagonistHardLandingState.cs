@@ -15,11 +15,13 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
             base.Enter();
+
+            StartAnimation(stateMachine.Protagonist.AnimationData.HardLandParameterHash);
 
             stateMachine.Protagonist.Input.ProtagonistActions.Movement.Disable();
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             ResetVelocity();
         }
@@ -28,9 +30,21 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.Exit();
 
+            StopAnimation(stateMachine.Protagonist.AnimationData.HardLandParameterHash);
+
             stateMachine.Protagonist.Input.ProtagonistActions.Movement.Enable();
         }
 
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+
+            if(!IsMovingHorizontally())
+                return;
+            
+            ResetVelocity();
+        }
+        
         public override void OnAnimationExitEvent()
         {
             stateMachine.Protagonist.Input.ProtagonistActions.Movement.Enable();           

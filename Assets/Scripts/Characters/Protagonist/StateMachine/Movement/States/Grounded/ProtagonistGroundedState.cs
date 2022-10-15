@@ -19,7 +19,17 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.Enter();
 
+            StartAnimation(stateMachine.Protagonist.AnimationData.GroundedParameterHash);
+
             UpdateShouldSpritnState();
+
+            UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            StopAnimation(stateMachine.Protagonist.AnimationData.GroundedParameterHash);
         }
 
         public override void PhysicsUpdate()
@@ -79,6 +89,13 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             float slopeSpeedModifier = movementData.SlopeSpeedAngles.Evaluate(angle);
 
+            if(stateMachine.ReusableData.MovementOnSlopesSpeedModifier != slopeSpeedModifier)
+            {
+                stateMachine.ReusableData.MovementOnSlopesSpeedModifier = slopeSpeedModifier;
+
+                UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
+            }
+
             stateMachine.ReusableData.MovementOnSlopesSpeedModifier = slopeSpeedModifier;
 
             return slopeSpeedModifier;
@@ -91,7 +108,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             Collider[] overlappedGroundColliders = Physics.OverlapBox(
                 groundColliderCenterInWorldSpace, 
-                groundCheckCollider.bounds.extents, 
+                stateMachine.Protagonist.ColliderUtility.TriggerColliderData.GroundCheckColliderExtents, 
                 groundCheckCollider.transform.rotation, 
                 stateMachine.Protagonist.LayerData.GroundLayer, 
                 QueryTriggerInteraction.Ignore);
@@ -105,8 +122,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.AddInputActionCallbacks();
 
-            stateMachine.Protagonist.Input.ProtagonistActions.Movement.canceled += OnMovementCanceled;
-
             stateMachine.Protagonist.Input.ProtagonistActions.Dash.started += OnDashStarted;
 
             stateMachine.Protagonist.Input.ProtagonistActions.Jump.started += OnJumpStarted;
@@ -115,8 +130,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected override void RemoveInputActionCallbacks()
         {
             base.RemoveInputActionCallbacks();
-
-            stateMachine.Protagonist.Input.ProtagonistActions.Movement.canceled -= OnMovementCanceled;
 
             stateMachine.Protagonist.Input.ProtagonistActions.Dash.started -= OnDashStarted;
 
@@ -178,11 +191,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             stateMachine.ChangeState(stateMachine.RunningState);
         }
 
-        protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-            stateMachine.ChangeState(stateMachine.IdlingState);
-        }
-        
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
             stateMachine.ChangeState(stateMachine.DashingState);

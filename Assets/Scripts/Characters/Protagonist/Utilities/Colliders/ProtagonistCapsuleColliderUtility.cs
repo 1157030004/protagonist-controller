@@ -10,5 +10,10 @@ namespace Shadee.ProtagonistController.Utilities
     public class ProtagonistCapsuleColliderUtility : CapsuleColliderUtility
     {
         [field: SerializeField] public ProtagonistTriggerColliderData TriggerColliderData { get; private set; }
+
+        protected override void OnInitialize()
+        {
+            TriggerColliderData.Initialize();
+        }
     }
 }

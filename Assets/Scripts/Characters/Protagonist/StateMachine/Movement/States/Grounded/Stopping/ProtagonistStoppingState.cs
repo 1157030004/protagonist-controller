@@ -11,9 +11,18 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region  IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            SetBaseCameraRecenteringData();
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            StartAnimation(stateMachine.Protagonist.AnimationData.StoppingParameterHash);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.StoppingParameterHash);
         }
         
         public override void PhysicsUpdate()
@@ -52,9 +61,6 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #endregion
 
         #region Input Methods
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-        }
 
         private void OnMovementStarted(InputAction.CallbackContext context)
         {

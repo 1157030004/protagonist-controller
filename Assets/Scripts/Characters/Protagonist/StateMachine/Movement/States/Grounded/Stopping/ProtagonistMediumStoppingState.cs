@@ -12,8 +12,17 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.Enter();
 
+            StartAnimation(stateMachine.Protagonist.AnimationData.MediumStopParameterHash);
+
             stateMachine.ReusableData.MovementDecelerationForce = movementData.StopData.MediumDecelerationForce;
             stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.MediumForce;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.MediumStopParameterHash);
         }
         #endregion
     }

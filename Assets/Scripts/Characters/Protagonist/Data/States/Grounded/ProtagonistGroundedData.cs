@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Shadee.ProtagonistController.Data;
 using UnityEngine;
 
 namespace Shadee.ProtagonistController.Characters.Protagonist
@@ -8,8 +10,11 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
     {
         [field: SerializeField] [field: Range(0f, 25f)] public float BaseSpeed { get; private set; } = 5f;
         [field: SerializeField] [field: Range(0f, 5f)] public float GroundToFallRayDistance { get; private set; } = 1f;
+        [field: SerializeField] public List<ProtagonistCameraRecenteringData> SidewaysCameraRecenteringData { get; private set;}
+        [field: SerializeField] public List<ProtagonistCameraRecenteringData> BackwardsCameraRecenteringData { get; private set;}
         [field: SerializeField] public AnimationCurve SlopeSpeedAngles { get; private set; }
         [field: SerializeField] public ProtagonistRotationData BaseRotationData { get; private set; }
+        [field: SerializeField] public ProtagonistIdleData IdleData { get; private set; }
         [field: SerializeField] public ProtagonistWalkData WalkData { get; private set; }
         [field: SerializeField] public ProtagonistRunData RunData { get; private set; }
         [field: SerializeField] public ProtagonistSprintData SprintData { get; private set; }

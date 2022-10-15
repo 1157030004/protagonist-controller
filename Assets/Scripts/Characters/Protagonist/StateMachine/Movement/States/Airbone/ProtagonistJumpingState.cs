@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Shadee.ProtagonistController.Characters.Protagonist
 {
@@ -84,6 +85,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             if(shouldKeepRotating)
             {
+                UpdateTargetRotation(GetMovementInputDirection());
                 jumpDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
             }
 
@@ -124,6 +126,12 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             stateMachine.Protagonist.Rigidbody.AddForce(jumpForce, ForceMode.VelocityChange);
         }
 
+        #endregion
+
+        #region Input Methods
+        protected override void OnMovementCanceled(InputAction.CallbackContext context)
+        {
+        }
         #endregion
     }
 }

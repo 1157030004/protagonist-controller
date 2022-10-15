@@ -19,11 +19,20 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.Enter();
 
+            StartAnimation(stateMachine.Protagonist.AnimationData.FallParameterHash);
+
             protagonistPositionOnEnter = stateMachine.Protagonist.transform.position;
 
             stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
             ResetVerticalVelocity();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.FallParameterHash);
         }
 
         public override void PhysicsUpdate()
@@ -41,7 +50,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         protected override void OnContactWithGround(Collider collider)
         {
-            float fallDistance = Mathf.Abs(protagonistPositionOnEnter.y - stateMachine.Protagonist.transform.position.y);
+            float fallDistance = protagonistPositionOnEnter.y - stateMachine.Protagonist.transform.position.y;
 
             if(fallDistance < fallData.MinimumDistanceTobeConsideredHardFall)
             {

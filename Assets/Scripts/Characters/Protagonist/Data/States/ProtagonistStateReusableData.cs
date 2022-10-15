@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Shadee.ProtagonistController.Data;
 using UnityEngine;
 
 namespace Shadee.ProtagonistController.Characters.Protagonist
@@ -10,6 +11,10 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public float MovementSpeedModifier { get; set; } = 1f;
         public float MovementOnSlopesSpeedModifier { get; set; } = 1f;
         public float MovementDecelerationForce { get; set; } = 1f;
+        
+        public List<ProtagonistCameraRecenteringData> SidewaysCameraRecenteringData { get; set;}
+        public List<ProtagonistCameraRecenteringData> BackwardsCameraRecenteringData { get; set;}
+        
         public bool ShouldWalk { get; set; }
         public bool ShouldSprint { get; set; }
 

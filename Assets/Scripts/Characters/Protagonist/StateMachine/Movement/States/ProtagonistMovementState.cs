@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections.Generic;
+using Shadee.ProtagonistController.Data;
 using Shadee.ProtagonistController.StateMachines;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +20,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             stateMachine = protagonistMovementStateMachine;
             movementData = stateMachine.Protagonist.Data.GroundedData;
             airboneData = stateMachine.Protagonist.Data.AirboneData;
+
+            SetBaseCameraRecenteringData();
 
             InitializeData();
         }
@@ -148,6 +152,20 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         #region Reusable Methods
 
+        protected void StartAnimation(int animationHash)
+        {
+            stateMachine.Protagonist.Animator.SetBool(animationHash, true);
+        }
+        protected void StopAnimation(int animationHash)
+        {
+            stateMachine.Protagonist.Animator.SetBool(animationHash, false);
+        }
+        protected void SetBaseCameraRecenteringData()
+        {
+            stateMachine.ReusableData.BackwardsCameraRecenteringData = movementData.BackwardsCameraRecenteringData;
+            stateMachine.ReusableData.SidewaysCameraRecenteringData = movementData.SidewaysCameraRecenteringData;
+        }
+
         protected void SetBaseRotationData()
         {
             stateMachine.ReusableData.RotationData = movementData.BaseRotationData;
@@ -158,20 +176,32 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected virtual void AddInputActionCallbacks()
         {
             stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started += OnWalkToggleStarted;
+            stateMachine.Protagonist.Input.ProtagonistActions.Look.started += OnMouseMovementStarted;
+            stateMachine.Protagonist.Input.ProtagonistActions.Movement.performed += OnMovementPerformed;
+            stateMachine.Protagonist.Input.ProtagonistActions.Movement.canceled += OnMovementCanceled;
         }
 
         protected virtual void RemoveInputActionCallbacks()
         {
-            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started -= OnWalkToggleStarted;   
+            stateMachine.Protagonist.Input.ProtagonistActions.WalkToggle.started -= OnWalkToggleStarted;
+            stateMachine.Protagonist.Input.ProtagonistActions.Look.started -= OnMouseMovementStarted;
+            stateMachine.Protagonist.Input.ProtagonistActions.Movement.performed -= OnMovementPerformed;
+            stateMachine.Protagonist.Input.ProtagonistActions.Movement.canceled -= OnMovementCanceled;   
         }
         protected Vector3 GetMovementInputDirection()
         {
             return new Vector3(stateMachine.ReusableData.MovementInput.x, 0f, stateMachine.ReusableData.MovementInput.y);
         }
 
-        protected float GetMovementSpeed()
+        protected float GetMovementSpeed(bool shouldConsiderSlopes = true)
         {
-            return movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier * stateMachine.ReusableData.MovementOnSlopesSpeedModifier;
+            float movementSpeed = movementData.BaseSpeed * stateMachine.ReusableData.MovementSpeedModifier;
+
+            if(shouldConsiderSlopes)
+            {
+                movementSpeed *= stateMachine.ReusableData.MovementOnSlopesSpeedModifier;
+            }
+            return movementSpeed;
         }
 
         protected Vector3 GetProtagonistHorizontalVelocity()
@@ -274,6 +304,64 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected virtual void OnContactWithGroundExited(Collider collider)
         {
         }
+        
+        protected void UpdateCameraRecenteringState(Vector2 movementInput)
+        {
+            if(movementInput == Vector2.zero)
+                return;
+
+            if(movementInput == Vector2.up)
+            {
+                DisableCameraRecentering();
+
+                return;
+            }
+
+            float cameraVerticalAngle = stateMachine.Protagonist.MainCameraTransform.eulerAngles.x;
+            if(cameraVerticalAngle >= 270f)
+            {
+                cameraVerticalAngle -= 360f;
+            } 
+            cameraVerticalAngle = Mathf.Abs(cameraVerticalAngle);
+
+            if(movementInput == Vector2.down)
+            {
+                SetCameraRecenteringState(cameraVerticalAngle, stateMachine.ReusableData.BackwardsCameraRecenteringData);
+                return;
+            }
+
+            SetCameraRecenteringState(cameraVerticalAngle, stateMachine.ReusableData.SidewaysCameraRecenteringData);
+        }
+
+        protected void EnableCameraRecentering(float waitTime = -1f, float recenteringTime = -1f)
+        {
+            float movementSpeed = GetMovementSpeed();
+
+            if(movementSpeed == 0f)
+            {
+                movementSpeed = movementData.BaseSpeed;
+            }
+            stateMachine.Protagonist.CameraUtility.EnableRecentering(waitTime, recenteringTime, movementData.BaseSpeed, movementSpeed);
+        }
+
+        protected void DisableCameraRecentering()
+        {
+            stateMachine.Protagonist.CameraUtility.DisableRecentering();
+        }
+
+        protected void SetCameraRecenteringState(float cameraVerticalAngle, List<ProtagonistCameraRecenteringData> cameraRecenteringData)
+        {
+            foreach (ProtagonistCameraRecenteringData recenteringData in cameraRecenteringData)
+            {
+                if (!recenteringData.IsWithinRange(cameraVerticalAngle))
+                    continue;
+
+                EnableCameraRecentering(recenteringData.WaitTime, recenteringData.RecenteringTime);
+                return;
+            }
+
+            DisableCameraRecentering();
+        }
         #endregion
 
         #region Input Methods
@@ -281,6 +369,22 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             stateMachine.ReusableData.ShouldWalk = !stateMachine.ReusableData.ShouldWalk;
         }
+
+        protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
+        {
+            DisableCameraRecentering();
+        }
+        
+        private void OnMouseMovementStarted(InputAction.CallbackContext context)
+        {
+            UpdateCameraRecenteringState(stateMachine.ReusableData.MovementInput);
+        }
+
+        private void OnMovementPerformed(InputAction.CallbackContext context)
+        {
+            UpdateCameraRecenteringState(context.ReadValue<Vector2>());
+        }
+        
         #endregion
     }
 }

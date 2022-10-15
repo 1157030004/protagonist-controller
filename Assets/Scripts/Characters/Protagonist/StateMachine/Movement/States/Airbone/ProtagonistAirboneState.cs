@@ -13,7 +13,16 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.Enter();
 
+            StartAnimation(stateMachine.Protagonist.AnimationData.AirboneParameterHash);
+
             ResetSprintState();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.AirboneParameterHash);
         }
         #endregion
 

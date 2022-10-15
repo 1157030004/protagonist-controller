@@ -14,10 +14,19 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = rollData.SpeedModifier;
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = rollData.SpeedModifier;
+            StartAnimation(stateMachine.Protagonist.AnimationData.RollParameterHash);
+
             stateMachine.ReusableData.ShouldSprint = false;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.RollParameterHash);
         }
 
         public override void PhysicsUpdate()

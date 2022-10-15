@@ -18,9 +18,11 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = sprintData.SpeedModifier;
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = sprintData.SpeedModifier;
+            StartAnimation(stateMachine.Protagonist.AnimationData.SprintParameterHash);
+
             stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.StrongForce;
 
             shouldResetSprintState = true;
@@ -31,6 +33,8 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         public override void Exit()
         {
             base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.SprintParameterHash);
 
             if(shouldResetSprintState)
             {
@@ -95,6 +99,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
             stateMachine.ChangeState(stateMachine.HardStoppingState);
+            base.OnMovementCanceled(context);
         }
 
         protected override void OnJumpStarted(InputAction.CallbackContext context)

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Shadee.ProtagonistController.Characters.Protagonist
 {
@@ -11,9 +7,19 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
         }
 
-        #region Input Methods
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
+        #region IState Methods
+        public override void Enter()
         {
+            base.Enter();
+
+            StartAnimation(stateMachine.Protagonist.AnimationData.LandingParameterHash);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(stateMachine.Protagonist.AnimationData.LandingParameterHash);
         }
         #endregion
     }

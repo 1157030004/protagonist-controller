@@ -13,9 +13,9 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #region IState Methods
         public override void Enter()
         {
+            stateMachine.ReusableData.MovementSpeedModifier = 0f;
             base.Enter();
 
-            stateMachine.ReusableData.MovementSpeedModifier = 0f;
             stateMachine.ReusableData.CurrentJumpForce = airboneData.JumpData.StationaryForce;
             ResetVelocity();
         }
@@ -28,6 +28,15 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
                 return;
             
             OnMove();
+        }
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+
+            if(!IsMovingHorizontally())
+                return;
+            
+            ResetVelocity();
         }
 
         public override void OnAnimationTransitionEvent()

@@ -14,7 +14,14 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         [field: SerializeField] public ProtagonistCapsuleColliderUtility ColliderUtility { get; private set; }
         [field: SerializeField] public ProtagonistLayerData LayerData { get; private set; }
 
+        [field: Header("Cameras")]
+        [field: SerializeField] public ProtagonistCameraUtility CameraUtility { get; private set; }
+
+        [field: Header("Animations")]
+        [field: SerializeField] public ProtagonistAnimationData AnimationData { get; private set; }
+
         public Rigidbody Rigidbody { get; private set; }
+        public Animator Animator { get; private set; }
         public ProtagonistInput Input { get; private set; }
         public Transform MainCameraTransform { get; private set; }
 
@@ -23,10 +30,13 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         private void Awake() 
         {
             Rigidbody = GetComponent<Rigidbody>();
+            Animator = GetComponentInChildren<Animator>();
             Input = GetComponent<ProtagonistInput>();
 
             ColliderUtility.Initialize(gameObject);
             ColliderUtility.CalculateCapsuleColliderDimentions();
+            CameraUtility.Initialize();
+            AnimationData.Initialize();
 
             MainCameraTransform = Camera.main.transform;
             movementStateMachine = new ProtagonistMovementStateMachine(this);    
@@ -62,6 +72,21 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         private void FixedUpdate() 
         {
             movementStateMachine.PhysicsUpdate();
+        }
+
+        public void OnMovementStateAnimationEnterEvent()
+        {
+            movementStateMachine.OnAnimationEnterEvent();
+        }
+
+        public void OnMovementStateAnimationExitEvent()
+        {
+            movementStateMachine.OnAnimationExitEvent();
+        }
+
+        public void OnMovementStateAnimationTransitionEvent()
+        {
+            movementStateMachine.OnAnimationTransitionEvent();
         }
 
     }
