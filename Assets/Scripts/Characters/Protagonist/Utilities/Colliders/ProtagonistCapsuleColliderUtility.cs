@@ -13,6 +13,7 @@ namespace Shadee.ProtagonistController.Utilities
 
         protected override void OnInitialize()
         {
+            base.OnInitialize();
             TriggerColliderData.Initialize();
         }
     }
