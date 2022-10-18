@@ -21,6 +21,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         public ProtagonistJumpingState JumpingState { get; }
         public ProtagonistFallingState FallingState { get; }
+        public ProtagonistGlidingState GlidingState { get; }
         
         public ProtagonistMovementStateMachine(Protagonist protagonist)
         {
@@ -44,6 +45,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             
             JumpingState = new ProtagonistJumpingState(this);
             FallingState = new ProtagonistFallingState(this);
+            GlidingState = new ProtagonistGlidingState(this);
         }
 
     }

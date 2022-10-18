@@ -26,6 +26,7 @@ namespace Shadee.ProtagonistController.Data
 
         [Header("Airbone Paramter Names")]
         [SerializeField] private string fallParameterName = "isFalling";
+        [SerializeField] private string glideParameterName = "isGliding";
 
         public int GroundedParameterHash { get; private set; }
         public int MovingParameterHash { get; private set; }
@@ -43,6 +44,7 @@ namespace Shadee.ProtagonistController.Data
         public int RollParameterHash { get; private set; }
         public int HardLandParameterHash { get; private set; }
         public int FallParameterHash { get; private set; }
+        public int GlideParameterHash { get; private set; }
 
         public void Initialize()
         {
@@ -63,6 +65,7 @@ namespace Shadee.ProtagonistController.Data
             HardLandParameterHash = Animator.StringToHash(hardLandParameterName);
 
             FallParameterHash = Animator.StringToHash(fallParameterName);
+            GlideParameterHash = Animator.StringToHash(glideParameterName);
         }
     }
 }

@@ -105,9 +105,9 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
             
             Vector3 movementDirection = GetMovementInputDirection();
 
-            float targetRorattionYAngle = Rotate(movementDirection);
+            float targetRotationYAngle = Rotate(movementDirection);
 
-            Vector3 targetRotationDirection = GetTargetRotationDirection(targetRorattionYAngle);
+            Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
 
             float movementSpeed = GetMovementSpeed();
 
@@ -135,6 +135,15 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
         private static float GetDirectionAngle(Vector3 direction)
         {
+            float directionAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            if (directionAngle < 0f)
+                directionAngle += 360f;
+            return directionAngle;
+        }
+
+        private static float GetGlidingDirectionAngle(Vector3 direction)
+        {
+            direction.z = 0;
             float directionAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             if (directionAngle < 0f)
                 directionAngle += 360f;

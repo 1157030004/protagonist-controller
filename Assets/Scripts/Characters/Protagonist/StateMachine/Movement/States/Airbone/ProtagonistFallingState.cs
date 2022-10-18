@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Shadee.ProtagonistController.Characters.Protagonist
 {
@@ -39,11 +40,23 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         {
             base.PhysicsUpdate();
 
-            LimitVerticalVelocity();
+            Glide();
         }
         #endregion
 
         #region Reusable Methods
+        protected override void AddInputActionCallbacks()
+        {
+            base.AddInputActionCallbacks();
+            stateMachine.Protagonist.Input.ProtagonistActions.Jump.started += OnGlideStarted;
+        }
+
+        protected override void RemoveInputActionCallbacks()
+        {
+            base.RemoveInputActionCallbacks();
+            stateMachine.Protagonist.Input.ProtagonistActions.Jump.started -= OnGlideStarted;
+        }
+
         protected override void ResetSprintState()
         {
         }
@@ -69,7 +82,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         #endregion
     
         #region Main Methods
-        private void LimitVerticalVelocity()
+        private void Glide()
         {
             Vector3 playerVerticalVelocity = GetProtagonistVerticalVelocity();
             if(playerVerticalVelocity.y >= -fallData.FallSpeedLimit)
@@ -79,6 +92,15 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
 
             stateMachine.Protagonist.Rigidbody.AddForce(limitedVelocity, ForceMode.VelocityChange);
         }
+        #endregion
+    
+        #region Input Methods
+        protected virtual void OnGlideStarted(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.GlidingState);
+            stateMachine.ReusableData.ShouldGlide = true;
+        }
+
         #endregion
     }
 }

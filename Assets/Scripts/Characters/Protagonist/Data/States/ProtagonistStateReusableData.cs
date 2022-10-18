@@ -17,6 +17,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         
         public bool ShouldWalk { get; set; }
         public bool ShouldSprint { get; set; }
+        public bool ShouldGlide { get; set; }
 
         private Vector3 currentTargetRotation;
         private Vector3 timeToReachTargetRotation;

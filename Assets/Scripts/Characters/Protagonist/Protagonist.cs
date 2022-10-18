@@ -20,6 +20,10 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         [field: Header("Animations")]
         [field: SerializeField] public ProtagonistAnimationData AnimationData { get; private set; }
 
+        [field: Header("Held Items")]
+        [field: SerializeField] public ProtagonistHeldItemData HeldItemData { get; private set; }
+
+
         public Rigidbody Rigidbody { get; private set; }
         public Animator Animator { get; private set; }
         public ProtagonistInput Input { get; private set; }

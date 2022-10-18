@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Airbone\ProtagonistFallingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\ProtagonistMovementStateMachine.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\Layers\ProtagonistLayerData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\Animations\ProtagonistAnimationData.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\ProtagonistMovementState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Stopping\ProtagonistLightStoppingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Utilities\Colliders\ProtagonistCapsuleColliderUtility.cs" />
@@ -69,12 +70,15 @@
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistRunningState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\ProtagonistDashingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\Moving\ProtagonistWalkData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Utilities\Animations\ProtagonistAnimationEventTrigger.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Stopping\ProtagonistStoppingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\Landing\ProtagonistRollData.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Landing\ProtagonistRollingState.cs" />
      <Compile Include="Assets\Scripts\Data\Colliders\DefaultColliderData.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Airbone\ProtagonistAirboneData.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Stopping\ProtagonistMediumStoppingState.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\ProtagonistIdleData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Airbone\ProtagonistGlidingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\Moving\ProtagonistRunData.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\ProtagonistIdlingState.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\Moving\ProtagonistSprintData.cs" />
@@ -84,9 +88,8 @@
      <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\ProtagonistRotationData.cs" />
      <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
      <Compile Include="Assets\Scripts\Characters\Protagonist\StateMachine\Movement\States\Grounded\Moving\ProtagonistMovingState.cs" />
-     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Grounded\ProtagonistIdleData.cs" />
-     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\Animations\ProtagonistAnimationData.cs" />
-     <Compile Include="Assets\Scripts\Characters\Protagonist\Utilities\Animations\ProtagonistAnimationEventTrigger.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\States\Airbone\ProtagonistGlideData.cs" />
+     <Compile Include="Assets\Scripts\Characters\Protagonist\Data\Held Items\ProtagonistHeldItemData.cs" />
      <None Include="Assets\Materials\Prototypes\License.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

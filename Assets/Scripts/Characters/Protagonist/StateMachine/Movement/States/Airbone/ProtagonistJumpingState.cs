@@ -132,6 +132,7 @@ namespace Shadee.ProtagonistController.Characters.Protagonist
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
         }
+        
         #endregion
     }
 }
